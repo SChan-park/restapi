@@ -4,18 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 @Controller
 public class HomeController {
+    /*
+    1. 화면에 helloworld가 출력됩니다.
+    */
     @GetMapping(value = "/helloworld/string")
     @ResponseBody
     public String helloworldString() {
         return "helloworld";
     }
+    /*
+    2. 화면에 {message:"helloworld"} 라고 출력됩니다.
+    */
     @GetMapping(value = "/helloworld/json")
     @ResponseBody
     public Hello helloworldJson() {
@@ -23,6 +26,9 @@ public class HomeController {
         hello.message = "helloworld";
         return hello;
     }
+    /*
+    3. 화면에 helloworld.ftl의 내용이 출력됩니다.
+    */
     @GetMapping(value = "/helloworld/page")
     public String helloworld() {
         return "helloworld";
@@ -32,13 +38,5 @@ public class HomeController {
     @Getter
     public static class Hello {
         private String message;
-    }
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
-
-    @GetMapping("/hello-world")
-    @ResponseBody
-    public Greeting sayHello(@RequestParam(name="name", required=false, defaultValue="Stranger") String name) {
-        return new Greeting(counter.incrementAndGet(), String.format(template, name));
     }
 }
